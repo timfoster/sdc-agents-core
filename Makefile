@@ -1,5 +1,5 @@
 
-# Copyright (c) 2012, Joyent, Inc. All rights reserved.
+# Copyright (c) 2018, Joyent, Inc. All rights reserved.
 #
 # Makefile: basic Makefile for template API service
 #
@@ -30,20 +30,22 @@ ifeq ($(shell uname -s),SunOS)
     NODE_PREBUILT_IMAGE=fd2cc906-8938-11e3-beab-4359c665ac99
 endif
 
-include ./tools/mk/Makefile.defs
+# XXX timf comment out during eng development
+#REQUIRE_ENG := $(shell git submodule update --init deps/eng)
+include ./deps/eng/tools/mk/Makefile.defs
+TOP ?= $(error Unable to access eng.git submodule Makefiles.)
 ifeq ($(shell uname -s),SunOS)
-    include ./tools/mk/Makefile.node_prebuilt.defs
+    include ./deps/eng/tools/mk/Makefile.node_prebuilt.defs
 else
-    include ./tools/mk/Makefile.node.defs
+    include ./deps/eng/tools/mk/Makefile.node.defs
 endif
 
-include ./tools/mk/Makefile.node_deps.defs
-include ./tools/mk/Makefile.smf.defs
+include ./deps/eng/tools/mk/Makefile.smf.defs
 
 NAME		:= agents_core
 RELEASE_TARBALL := $(NAME)-$(STAMP).tgz
 RELEASE_MANIFEST := $(NAME)-$(STAMP).manifest
-RELSTAGEDIR      := /tmp/$(STAMP)
+RELSTAGEDIR      := /tmp/$(NAME)-$(STAMP)
 NODEUNIT	= $(TOP)/node_modules/.bin/nodeunit
 
 
@@ -108,13 +110,11 @@ dumpvar:
 	@echo "$(VAR) is '$($(VAR))'"
 
 
-include ./tools/mk/Makefile.deps
+include ./deps/eng/tools/mk/Makefile.deps
 ifeq ($(shell uname -s),SunOS)
-    include ./tools/mk/Makefile.node_prebuilt.targ
+    include ./deps/eng/tools/mk/Makefile.node_prebuilt.targ
 else
-    include ./tools/mk/Makefile.node.targ
+    include ./deps/eng/tools/mk/Makefile.node.targ
 endif
-include ./tools/mk/Makefile.node_deps.targ
-include ./tools/mk/Makefile.smf.targ
-include ./tools/mk/Makefile.targ
-
+include ./deps/eng/tools/mk/Makefile.smf.targ
+include ./deps/eng/tools/mk/Makefile.targ
