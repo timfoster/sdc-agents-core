@@ -30,10 +30,10 @@ ifeq ($(shell uname -s),SunOS)
     NODE_PREBUILT_IMAGE=fd2cc906-8938-11e3-beab-4359c665ac99
 endif
 
-# XXX timf comment out during eng development
-#REQUIRE_ENG := $(shell git submodule update --init deps/eng)
+REQUIRE_ENG := $(shell git submodule update --init deps/eng)
 include ./deps/eng/tools/mk/Makefile.defs
 TOP ?= $(error Unable to access eng.git submodule Makefiles.)
+
 ifeq ($(shell uname -s),SunOS)
     include ./deps/eng/tools/mk/Makefile.node_prebuilt.defs
 else
