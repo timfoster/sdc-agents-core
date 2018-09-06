@@ -78,7 +78,7 @@ release: all deps $(SMF_MANIFESTS)
     $(TOP)/package.json \
     $(RELSTAGEDIR)/$(NAME)
 	uuid -v4 > $(RELSTAGEDIR)/$(NAME)/image_uuid
-	(cd $(RELSTAGEDIR) && $(TAR) -zcf $(TOP)/$(RELEASE_TARBALL) *)
+	(cd $(RELSTAGEDIR) && $(TAR) -I pigz -cf $(TOP)/$(RELEASE_TARBALL) *)
 	cat $(TOP)/manifest.tmpl | sed \
 		-e "s/UUID/$$(cat $(RELSTAGEDIR)/$(NAME)/image_uuid)/" \
 		-e "s/NAME/$$(json name < $(TOP)/package.json)/" \
