@@ -30,6 +30,8 @@ ifeq ($(shell uname -s),SunOS)
     NODE_PREBUILT_IMAGE=fd2cc906-8938-11e3-beab-4359c665ac99
 endif
 
+ENGBLD_NO_ZFS_IMAGE = true
+
 REQUIRE_ENG := $(shell git submodule update --init deps/eng)
 include ./deps/eng/tools/mk/Makefile.defs
 TOP ?= $(error Unable to access eng.git submodule Makefiles.)
@@ -47,8 +49,6 @@ RELEASE_TARBALL := $(NAME)-$(STAMP).tgz
 RELEASE_MANIFEST := $(NAME)-$(STAMP).manifest
 RELSTAGEDIR      := /tmp/$(NAME)-$(STAMP)
 NODEUNIT	= $(TOP)/node_modules/.bin/nodeunit
-
-
 
 #
 # Repo-specific targets
