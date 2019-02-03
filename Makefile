@@ -56,6 +56,7 @@ all: $(SMF_MANIFESTS) | $(NPM_EXEC) $(REPO_DEPS)
 	$(NPM) install && $(NPM) update
 
 CLEAN_FILES += $(TAP) ./node_modules/tap
+CLEAN_FILES += $(NAME)-*.tgz $(NAME)-*.manifest
 
 .PHONY: test
 test: $(TAP)
